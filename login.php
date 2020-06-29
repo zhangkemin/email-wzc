@@ -1,25 +1,7 @@
-<?php
-require("./database.php");
-if(isset($_POST['sub'])){
-	$sql="select * from cms_accounts where status=1 and email='".addslashes($_POST['email'])."' and password='".addslashes(md5($_POST['pass']))."'";
-	$query=mysql_query($sql);
-	$num=mysql_num_rows($query);
-	if($num>0){
-		$arr=mysql_fetch_assoc($query);
-		foreach($arr as $k=>$v){
-			$_SESSION[$k]=$v;	
-		}
-		$tip='用户登录成功，正在跳转……';
-	}else{
-		$tip='很遗憾，登录失败，正在跳转……';	
-	}
-}
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="refresh" content="3; url=./index.php" />
 <title>简约信箱</title>
 <link rel="icon" href="./favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
@@ -37,7 +19,7 @@ if(isset($_POST['sub'])){
 <body>
 	<div id="wrapper">
     	<!-- h1 tag stays for the logo, you can use the a tag for linking the index page -->
-    	<h1><a href="#"><span>Simple Email</span></a></h1>
+    	<h1><a href="./index.php"><span>Simple Email</span></a></h1>
         
         <!-- You can name the links with lowercase, they will be transformed to uppercase by CSS, we prefered to name them with uppercase to have the same effect with disabled stylesheet -->
         <ul id="mainNav">
@@ -46,8 +28,17 @@ if(isset($_POST['sub'])){
         <!-- // #end mainNav -->
         
         <div id="containerHolder">
-                <div id="main">
-                    	<h3><?php echo $tip;?></h3>
+                <div id="main" style="margin:20px auto 0 auto;width:700px;padding:0;float:none;">
+                	<form action="./dologin.php" class="jNice" method="post">
+                    	<fieldset>
+                    		<p><label>邮箱名</label></p>
+                    		<p><input type="text" name="email" class="text-long"></p>
+                    		<p><label>密码</label></p>
+                    		<p><input type="password" name="pass" class="text-long"></p>
+                    		<input name="sub" type="submit" value="用户登录" />
+                    		<label><a style="position:relative;left:10px;top:10px;" href="./register.php">用户注册</a></label>
+                    	</fieldset>
+                    </form>
                 </div>
                 <!-- // #main -->               
                 <div class="clear"></div>
